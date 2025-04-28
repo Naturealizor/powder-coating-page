@@ -1,5 +1,3 @@
-
-
 /** @type { import('@storybook/sveltekit').StorybookConfig } */
 const config = {
   "stories": [
@@ -8,7 +6,12 @@ const config = {
   ],
   "addons": [
     "@storybook/addon-essentials",
-    "@storybook/addon-svelte-csf",
+    {
+      name: "@storybook/addon-svelte-csf",
+      options: {
+        legacyTemplate: true
+      }
+    },
     "@chromatic-com/storybook",
     "@storybook/experimental-addon-test"
   ],

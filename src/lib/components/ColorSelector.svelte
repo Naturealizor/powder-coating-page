@@ -2,7 +2,7 @@
   File: src/lib/components/ColorSelector.svelte
   A component that displays available powder coating colors and handles color selection
 -->
-<script>
+<script lang="ts">
 	// Import necessary Svelte features
 	import { createEventDispatcher } from 'svelte';
 
@@ -27,14 +27,23 @@
 		]
 	} = $props();
 
+	type ColorEvent = {
+		colorSelect: {
+			id: string;
+			name: string;
+			hex: string;
+			price?: number;
+		};
+	};
+
 	// Create event dispatcher for color selection
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher<ColorEvent>();
 
 	// Track selected color
-	let selectedColorId = '';
+	let selectedColorId = $state('');
 
 	// Handle color selection
-	function handleColorSelect(colorId) {
+	function handleColorSelect(colorId: string) {
 		selectedColorId = colorId;
 		const selectedColor = colors.find((c) => c.id === colorId);
 		dispatch('colorSelect', selectedColor);
@@ -50,7 +59,7 @@
 				class:selected={selectedColorId === color.id}
 				style:background-color={color.hex}
 				style:border-color={selectedColorId === color.id ? color.hex : 'transparent'}
-				on:click={() => handleColorSelect(color.id)}
+				onclick={() => handleColorSelect(color.id)}
 			>
 				<span
 					class="color-name absolute right-0 bottom-0 left-0 rounded-b-lg p-2 text-center text-sm"

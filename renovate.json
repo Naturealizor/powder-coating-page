@@ -1,0 +1,42 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    ":semanticCommits",
+    ":semanticPrefixFix",
+    ":maintainLockFilesWeekly",
+    ":enableVulnerabilityAlertsWithLabel(security)",
+    "group:allNonMajor"
+  ],
+  "schedule": ["every weekend"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["^@sveltejs"],
+      "groupName": "SvelteKit packages",
+      "labels": ["svelte-update"]
+    },
+    {
+      "matchPackagePatterns": ["^three", "^@types/three"],
+      "groupName": "Three.js packages",
+      "labels": ["three-update"]
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "devDependencies (non-major)",
+      "labels": ["dev-deps"]
+    }
+  ],
+  "labels": ["dependencies"],
+  "pnpmShrinkwrap": true,
+  "rangeStrategy": "pin",
+  "dependencyDashboard": true,
+  "automerge": true,
+  "automergeType": "pr",
+  "automergeStrategy": "squash",
+  "platformAutomerge": true,
+  "major": {
+    "automerge": false,
+    "labels": ["major-update"]
+  }
+} 
